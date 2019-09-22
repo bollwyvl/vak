@@ -1,4 +1,3 @@
-import crowsetta
 import numpy as np
 
 from .validation import column_or_1d
@@ -431,3 +430,81 @@ def lbl_tb2segments(lbl_tb,
     offsets_s = offset_inds * timebin_dur
 
     return labels, onsets_s, offsets_s
+
+
+def split_lbl_tb(lbl_tb, unlabeled_label=0, return_inds=False):
+    """split vector of labeled timebins into segments separated by unlabeled 'silent gaps'
+    (which could be actual silent gaps between e.g. birdsong syllables, or just noise that
+    fell into the unlabeled category).
+
+    Parameters
+    ----------
+    lbl_tb : numpy.ndarray
+        vector of labeled timebins from spectrogram
+    unlabeled_label : int
+        label that was given to segments that were not labeled in annotation,
+        e.g. silent periods between annotated segments.
+        Default is 0.
+    return_inds : bool
+        if True, return list of indices for segments in lbl_tb, in addition to the segments themselves.
+        if False, just return list of numpy.ndarrays that are the segments from lbl_tb.
+
+    Returns
+    -------
+    segments : list
+        of numpy.ndarray, the consecutive runs of labels that were separated by runs of unlabeled_label.
+    segment_inds : list
+        of numpy.ndarray, indices that will recover segments list from lbl_tb.
+    """
+    segment_inds = np.nonzero(lbl_tb != unlabeled_label)[0]
+    segment_inds_list = np.split(segment_inds, np.where(np.diff(segment_inds) != 1)[0] + 1)
+    segments = [lbl_tb[seg_inds_] for seg_inds_ in segment_inds_list]
+    if return_inds:
+        return segments, segment_inds_list
+    else:
+        return segments
+
+
+def resegment(lbl_tb, min_dur_tb, majority_vote=True, unlabeled_label=0):
+    """
+
+    Parameters
+    ----------
+    lbl_tb
+    min_dur_tb
+    majority_vote
+    unlabeled_label
+
+    Returns
+    -------
+    lbl_tb
+    """
+    segments, segment_inds = split_lbl_tb(lbl_tb, unlabeled_label, return_inds=True)
+
+    # remove any segments shorter than min_dur_tb
+    to_pop = []
+    if min_dur_tb > 0:
+        for seg, seg_inds in zip(segments, segment_inds):
+            if seg.shape[0] < min_dur_tb:
+                lbl_tb[seg_inds] = unlabeled_label
+                to_pop.append(
+                    (seg, seg_inds)
+                )
+    if to_pop:
+        for seg, seg_inds in to_pop:
+            segments.remove(seg)
+            segment_inds.remove(seg_inds)
+
+    # assign majority vote to segment
+    if majority_vote:
+        for seg, seg_inds in zip(segments, segment_inds):
+            classes, counts = np.unique(seg, return_counts=True)
+            if classes.shape[0] > 1:
+                majority = np.argmax(counts)
+                # if there are multiple classes that are in the majority, don't do anything
+                if np.argwhere(counts == np.amax(counts)).shape[0] > 1:
+                    continue
+                majority_class = classes[majority]
+                lbl_tb[seg_inds] = majority_class
+
+    return lbl_tb
