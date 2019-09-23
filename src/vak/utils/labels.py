@@ -479,21 +479,21 @@ def resegment(lbl_tb, min_dur_tb, majority_vote=True, unlabeled_label=0):
     -------
     lbl_tb
     """
+    lbl_tb = np.copy(lbl_tb)
     segments, segment_inds = split_lbl_tb(lbl_tb, unlabeled_label, return_inds=True)
 
     # remove any segments shorter than min_dur_tb
     to_pop = []
     if min_dur_tb > 0:
-        for seg, seg_inds in zip(segments, segment_inds):
+        for ind, (seg, seg_inds) in enumerate(zip(segments, segment_inds)):
             if seg.shape[0] < min_dur_tb:
                 lbl_tb[seg_inds] = unlabeled_label
-                to_pop.append(
-                    (seg, seg_inds)
-                )
+                to_pop.append((ind))
     if to_pop:
-        for seg, seg_inds in to_pop:
-            segments.remove(seg)
-            segment_inds.remove(seg_inds)
+        # have to pop in reverse order to remove the correct items
+        for ind in reversed(to_pop):
+            segments.pop(ind)
+            segment_inds.pop(ind)
 
     # assign majority vote to segment
     if majority_vote:
