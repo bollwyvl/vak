@@ -31,7 +31,7 @@ VERSION = about['__version__']
 LICENSE = about['__license__']
 
 REQUIRED = [
-    'tensorflow', 'numpy', 'scipy', 'matplotlib', 'dask[bag]', 'joblib',
+    'tensorflow>=2.0', 'numpy', 'scipy', 'matplotlib', 'joblib',
     'tqdm', 'attrs', 'crowsetta==1.1.1',
 ]
 
