@@ -32,7 +32,7 @@ LICENSE = about['__license__']
 
 REQUIRED = [
     'tensorflow>=2.0', 'numpy', 'scipy', 'matplotlib', 'pandas', 'joblib',
-    'tqdm', 'attrs', 'crowsetta==1.1.1',
+    'tqdm', 'attrs', 'crowsetta>=2.1.0',
 ]
 
 dev_deps = [
