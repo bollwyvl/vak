@@ -52,8 +52,7 @@ dev_deps = [
 ]
 
 test_deps = [
-    'vak_test_net',
-    'tweetynet>=0.1.1a4',
+    'pytest',
 ]
 
 doc_deps = [
