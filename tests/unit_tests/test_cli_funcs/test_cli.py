@@ -7,13 +7,12 @@ import shutil
 import tempfile
 import unittest
 
+import pytest
+
 import vak.util
 import vak.cli.cli
 from vak.core.learncurve import LEARN_CURVE_DIR_STEM
 
-HERE = Path(__file__).parent
-TEST_DATA_DIR = HERE.joinpath('..', '..', 'test_data')
-TEST_CONFIGS_PATH = TEST_DATA_DIR.joinpath('configs')
 
 
 def copydir(src, dst):
@@ -25,11 +24,6 @@ def copydir(src, dst):
 
 class TestCli(unittest.TestCase):
     def setUp(self):
-        # copy temporary configs inside TEST_CONFIGS_PATH
-        learncurve_config = TEST_CONFIGS_PATH.joinpath('test_learncurve_config.ini')
-        predict_config = TEST_CONFIGS_PATH.joinpath('test_predict_config.ini')
-        train_config = TEST_CONFIGS_PATH.joinpath('test_train_config.ini')
-
         self.tmp_config_dir = Path(tempfile.mkdtemp())
         self.tmp_learncurve_config_path = self.tmp_config_dir.joinpath(
             'tmp_learncurve_config.ini')
