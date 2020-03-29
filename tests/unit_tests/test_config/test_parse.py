@@ -5,7 +5,6 @@ import tempfile
 import shutil
 import unittest
 from configparser import ConfigParser
-import pickle
 
 import numpy as np
 import joblib
@@ -14,7 +13,6 @@ import vak.config
 import vak.transforms.transforms
 import vak.util
 import vak.models
-import vak.util.data
 import vak.util.spect
 
 HERE = os.path.dirname(__file__)
