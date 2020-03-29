@@ -19,7 +19,7 @@ class TestTrain(unittest.TestCase):
     def setUp(self):
         self.tmp_output_dir = tempfile.mkdtemp()
 
-        test_train_config = TEST_CONFIGS_DIR.joinpath('test_train_config.ini')
+        test_train_config = TEST_CONFIGS_DIR.joinpath('test_train_audio_cbin_annot_notmat.toml')
         self.tmp_config_dir = tempfile.mkdtemp()
         self.tmp_config_path = os.path.join(self.tmp_config_dir, 'tmp_test_train_config.ini')
         shutil.copy(test_train_config, self.tmp_config_path)
