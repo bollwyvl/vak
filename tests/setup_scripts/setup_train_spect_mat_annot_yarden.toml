@@ -1,0 +1,33 @@
+[PREP]
+data_dir = "./tests/test_data/mat/llb3/spect"
+output_dir = "./tests/test_data/prep/train/spect_mat_annot_yarden"
+spect_format = "mat"
+annot_format = "yarden"
+annot_file = "./tests/test_data/mat/llb3/spect"
+labelset = "1-20, 22"
+train_dur = 400
+val_dur = 100
+test_dur = 400
+
+[SPECT_PARAMS]
+fft_size = 512
+step_size = 64
+freq_cutoffs = [500, 10000]
+thresh = 6.25
+transform_type = "log_spect"
+
+[DATALOADER]
+window_size = 88
+
+[TRAIN]
+models = [ "TweetyNet",]
+root_results_dir = "./tests/test_data/results/train/spect_mat_annot_yarden"
+batch_size = 11
+num_epochs = 2
+normalize_spectrograms = true
+val_error_step = 1
+checkpoint_step = 1
+save_only_single_checkpoint_file = true
+
+[TweetyNet.optimizer]
+lr = 0.001
