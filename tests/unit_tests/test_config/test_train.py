@@ -21,7 +21,7 @@ class TestParseTrainConfig(unittest.TestCase):
         self.tmp_root_dir = tempfile.mkdtemp()
         self.tmp_results_dir = tempfile.mkdtemp(dir=self.tmp_root_dir)
 
-        self.config_file = os.path.join(TEST_DATA_DIR, 'configs', 'test_train_config.ini')
+        self.config_file = os.path.join(TEST_DATA_DIR, 'configs', 'test_train_audio_cbin_annot_notmat.toml')
         self.config_obj = ConfigParser()
         self.config_obj.read(self.config_file)
         self.config_obj['TRAIN']['train_vds_path'] = self.tmp_train_vds_path
