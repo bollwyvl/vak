@@ -34,7 +34,7 @@ labels_cbin = []
 for audio_file, annot in zip(audio_files_cbin, annot_list_cbin):
     if set(annot.seq.labels).issubset(labelset_cbin):
         labels_cbin.append(annot.seq.labels)
-        fs, data = load_cbin(audio_file)
+        data, fs = load_cbin(audio_file)
         durs_cbin.append(data.shape[0] / fs)
 
 spect_dir_mat = os.path.join(TEST_DATA_DIR, 'mat', 'llb3', 'spect')
