@@ -158,14 +158,14 @@ class TestParseConfig(unittest.TestCase):
 
     def test_invalid_section_raises(self):
         invalid_section_config = os.path.join(
-            TEST_CONFIGS_PATH, 'invalid_section_config.ini'
+            TEST_CONFIGS_PATH, 'invalid_section_config.toml'
         )
         with self.assertRaises(ValueError):
             vak.config.parse_config(invalid_section_config)
 
     def test_invalid_option_raises(self):
         invalid_option_config = os.path.join(
-            TEST_CONFIGS_PATH, 'invalid_option_config.ini'
+            TEST_CONFIGS_PATH, 'invalid_option_config.toml'
         )
         with self.assertRaises(ValueError):
             vak.config.parse_config(invalid_option_config)
