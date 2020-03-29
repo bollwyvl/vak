@@ -5,7 +5,6 @@ import unittest
 
 import vak.config.predict
 import vak.util
-from vak.core.learncurve import LEARN_CURVE_DIR_STEM
 
 HERE = Path(__file__).parent
 TEST_DATA_DIR = HERE.joinpath('..', '..', 'test_data')
@@ -27,7 +26,7 @@ class TestParsePredictConfig(unittest.TestCase):
         spect_scaler = str(spect_scaler)
 
         # rewrite config so it points to data for testing + temporary output dirs
-        a_config = str(TEST_CONFIGS_PATH.joinpath('test_predict_config.ini'))
+        a_config = str(TEST_CONFIGS_PATH.joinpath('test_predict_audio_cbin_annot_notmat.toml'))
         config = ConfigParser()
         config.read(a_config)
         config['PREDICT']['checkpoint_path'] = checkpoint_path
