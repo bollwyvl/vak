@@ -1,0 +1,36 @@
+[PREP]
+labelset = '12345678'
+data_dir = "./tests/test_data/koumura/Bird0"
+output_dir = "./tests/test_data/prep/train/audio_wav_annot_koumura"
+audio_format = "wav"
+annot_format = "koumura"
+annot_file = "./tests/test_data/koumura//Bird0/Annotation.xml"
+test_dur = 50
+train_dur = 15
+val_dur = 30
+
+[SPECT_PARAMS]
+fft_size = 512
+step_size = 64
+freq_cutoffs = [500, 10000,]
+thresh = 6.25
+transform_type = "log_spect"
+
+[DATALOADER]
+window_size = 88
+
+[TRAIN]
+normalize_spectrograms = true
+train_set_durs = [ 60, 120, 480,]
+num_epochs = 50
+val_error_step = 1
+checkpoint_step = 1
+save_only_single_checkpoint_file = true
+patience = 5
+replicates = 4
+models = "TweetyNet"
+root_results_dir = "./tests/test_data/results/train/audio_wav_annot_koumura"
+batch_size = 11
+
+[TweetyNet.optimizer]
+lr = 0.001
